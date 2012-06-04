@@ -21,29 +21,30 @@ import os
 from google.appengine.ext.webapp import template
 
 class MainHandler(webapp.RequestHandler):
+    
+    # Send them to index.html, show the latest text responses as "messages"
     def get(self):
         path = os.path.join(os.path.dirname(__file__), 'index.html')
-        ACCOUNT_SID = "AC7eb6ad5c089e4c23a84a5e0b5e4b048e"
-        AUTH_TOKEN = "c84982247b4f986713d20b3e527bc7da"
+        ACCOUNT_SID = "YOUR_TWILIO_ACCCOUNT_SID"
+        AUTH_TOKEN = "YOUR_TWILIO_AUTH_TOKEN"
         client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
-        messages = client.sms.messages.list(to="3472638214")
-        #for message in client.sms.messages.list(to="3472638214"):
-            #return messagelist = message.body 
+        messages = client.sms.messages.list(to="YOUR_PHONE_NUMBER")
         template_values = {
 		            'messages': messages
 		            #'url': url,
 		            #'url_linktext': url_linktext,
 		        }
         self.response.out.write(template.render(path, template_values))
-
+    
+    # Now that we have the phone number and name to text, let's send it.
     def post(self):
           thenumber = self.request.get("number")
           thename = self.request.get("name")
-          ACCOUNT_SID = "AC7eb6ad5c089e4c23a84a5e0b5e4b048e"
-          AUTH_TOKEN = "c84982247b4f986713d20b3e527bc7da"
+          ACCOUNT_SID = "YOUR_TWILIO_ACCCOUNT_SID"
+          AUTH_TOKEN = "YOUR_TWILIO_AUTH_TOKEN"
           client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
           message = client.sms.messages.create(thenumber,
-            from_="3472638214", 
+            from_="YOUR_PHONE_NUMBER", 
             body="Hey %s you probably deleted my number already, but whatever. I still hate you." % (thename))
           messages = client.sms.messages.list(to="3472638214")
 
@@ -52,7 +53,6 @@ class MainHandler(webapp.RequestHandler):
 		            #'url': url,
 		            #'url_linktext': url_linktext,
 		        }
-		
           path = os.path.join(os.path.dirname(__file__), 'called.html')
           self.response.out.write(template.render(path, template_values))
 
