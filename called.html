@@ -1,0 +1,24 @@
+<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="/css/main.css" />
+  </head>
+  <body>
+	<div class="page-wrap"><h1>The Ex Text</h1>
+    <form action="" method="post">
+	  <p>name: <input type="text" name="name" method="POST" placeholder="person you're texting"/></p>
+      <p>number: <input type="text" name="number" method="POST" placeholder="their digits"/></p>
+		<input type="submit" method="POST"> <div id="sent">Success!</div>
+    </form>
+	</div>
+	
+	<div class="page-wrap"><h2>Latest Replies</h2>
+		{% for message in messages %}
+	<div id="body">{{ message.body }}</div> 
+	<div id="date">xxx-xxx-{{ message.from_|slice:"8:" }}</div><br>
+	{% endfor %}
+	</div>
+</div>
+
+	<div id="bg"><img src="http://howtogetaoldgirlfriendback.com/wp-content/uploads/2011/06/Why-did-she-break-up-with-me.jpg"></div>
+  </body>
+</html>
